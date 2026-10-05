@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f9faf8">
+  <meta name="description" content="MeSD: Multi-Evidence Self-Distillation for VideoLLM. Shared evidence-conditioned teachers, verification-guided optimization, and efficient vLLM training.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="MeSD — Multi-Evidence Self-Distillation for VideoLLM">
+  <meta property="og:description" content="Learning from answers, time, and space. Multi-teacher on-policy self-distillation for video reasoning.">
+  <meta property="og:image" content="assets/overview.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>MeSD · Multi-Evidence Self-Distillation for VideoLLM</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="styles.css">
+  <script src="site-config.js" defer></script>
+  <script src="site.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <svg class="icon-definitions" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-paper" viewBox="0 0 24 24"><path d="M14 3H5v18h14V8zM14 3v6h5M8 13h8M8 17h6"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V3H3v13h5"/></symbol>
+    <symbol id="i-expand" viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></symbol>
+  </svg>
+
+  <header class="site-header">
+    <nav class="nav container" aria-label="Main navigation">
+      <a class="wordmark" href="#top" aria-label="MeSD home"><span class="brand-dots" aria-hidden="true"><i></i><i></i><i></i></span>MeSD<span class="wordmark-divider">/</span><span class="wordmark-detail">Video reasoning</span></a>
+      <div class="nav-links"><a href="#method">Method</a><a href="#results">Results</a><a href="#citation">Cite</a></div>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero container" id="top" aria-labelledby="project-title">
+      <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span>Multi-teacher · On-policy · Video reasoning</p>
+      <h1 id="project-title"><span class="project-name">MeSD</span><span class="project-title">Multi-Evidence Self-Distillation<br class="desktop-break"> for VideoLLM</span></h1>
+      <p class="hero-claim">To our knowledge, the <strong>first multi-teacher on-policy self-distillation framework for VideoLLMs.</strong></p>
+      <div class="resource-links">
+        <a class="button button-dark" href="assets/mesd-paper.pdf" data-resource="paper" target="_blank" rel="noopener"><svg><use href="#i-paper"/></svg>Read the paper<svg class="button-arrow"><use href="#i-arrow"/></svg></a>
+        <a class="button button-outline" data-resource="code" hidden target="_blank" rel="noopener" aria-label="GitHub source code"><img class="brand-icon" src="assets/github.svg" width="20" height="20" alt="" aria-hidden="true">Code</a>
+        <span class="button button-pending" data-pending="code" aria-label="GitHub source code coming soon"><img class="brand-icon" src="assets/github.svg" width="20" height="20" alt="" aria-hidden="true">Code <span class="soon">Coming soon</span></span>
+        <a class="button button-outline" data-resource="model" hidden target="_blank" rel="noopener" aria-label="Hugging Face model weights"><img class="brand-icon" src="assets/huggingface.svg" width="20" height="20" alt="" aria-hidden="true">Models</a>
+        <span class="button button-pending" data-pending="model" aria-label="Hugging Face model weights coming soon, pending release approval"><img class="brand-icon" src="assets/huggingface.svg" width="20" height="20" alt="" aria-hidden="true">Models <span class="soon">Coming soon</span></span>
+        <a class="button button-outline" href="#results">Explore results<svg><use href="#i-arrow"/></svg></a>
+      </div>
+      <p class="model-release-note" data-pending="model">Model weights are undergoing internal release approval and will be made available upon approval.</p>
+      <div class="hero-summary">
+        <p class="summary-label">THE IDEA, IN ONE SENTENCE</p>
+        <p>Learn from <span class="answer-text">what</span>, <span class="temporal-text">when</span>, and <span class="spatial-text">where</span> — then use verification to decide <em>how</em> to learn.</p>
+      </div>
+    </section>
+
+    <section class="section container" id="overview" aria-labelledby="overview-title">
+      <div class="section-heading"><div><p class="eyebrow">01 / The intuition</p><h2 id="overview-title">More evidence.<br>More precise supervision.</h2></div><p>Video reasoning connects an answer to events in time and objects in space. MeSD makes these different sources of evidence explicit in the learning process. Shared teacher parameters and vLLM-based rollouts keep training efficient.</p></div>
+      <figure class="paper-figure">
+        <button class="figure-button" type="button" data-figure="assets/overview.webp" data-caption="Evidence-specific preferences, verification-guided supervision, and experimental results from the MeSD paper." aria-label="Enlarge the motivation and results figure">
+          <img src="assets/overview.webp" width="2200" height="1140" alt="Four panels from the MeSD paper: evidence agreement and conflict, supervision strategies, selected benchmark results, and training reward curves." loading="lazy">
+          <span class="expand-label"><svg><use href="#i-expand"/></svg>Expand figure</span>
+        </button>
+        <figcaption>Evidence may agree, complement, or conflict. MeSD separates its sources and routes supervision according to trajectory verification.</figcaption>
+      </figure>
+      <details class="abstract">
+        <summary>Read the abstract<span aria-hidden="true">+</span></summary>
+        <div class="abstract-content"><p>While reinforcement learning with verifiable rewards provides reliable outcome supervision for VideoLLMs, sequence-level rewards offer limited token-level guidance. On-policy self-distillation addresses this limitation by conditioning a self-teacher on privileged information to provide dense token-level supervision. However, aggregating heterogeneous evidence within a single teacher context obscures cross-evidence agreement and conflict. A further challenge lies in determining whether teacher guidance should refine reward-based updates or provide corrective supervision for failed trajectories. To address these issues, we propose MeSD, a multi-evidence self-distillation framework for VideoLLMs. MeSD constructs three evidence-conditioned teachers with shared parameters, using the ground-truth answer as a common semantic context while separately incorporating temporal and spatial evidence. Given the same student-generated prefixes, MeSD evaluates evidence-specific preferences relative to the Answer Teacher and fuses teacher-common preferences with gated teacher-specific residuals. Furthermore, MeSD introduces Verification-Guided Optimization to classify trajectories as Success, Failure, or Indeterminate. For Success and Indeterminate trajectories, MeSD refines token-level advantage magnitudes while preserving reward-derived signs. For verified failure trajectories that contain the required evidence, MeSD applies failure-conditioned distillation, using reverse-KL correction toward the fused distribution. Experiments on multiple video benchmarks demonstrate consistent gains over reinforcement learning and self-distillation baselines.</p></div>
+      </details>
+    </section>
+
+    <section class="section section-tinted" id="method" aria-labelledby="method-title">
+      <div class="container">
+        <div class="section-heading"><div><p class="eyebrow">02 / The method</p><h2 id="method-title">Three evidence views.<br>One shared self-teacher.</h2></div><p>Existing annotations provide richer token-level supervision. The teachers share EMA parameters and score student-generated trajectories, without a stronger external teacher or additional teacher rollouts.</p></div>
+        <div class="evidence-views" aria-label="Evidence-conditioned teachers">
+          <article class="evidence-view answer-view"><span class="view-symbol">A</span><div><h3>Answer Teacher</h3><p>The semantic anchor: what is the correct answer?</p></div></article>
+          <article class="evidence-view temporal-view"><span class="view-symbol">T</span><div><h3>Answer–Temporal Teacher</h3><p>Adds annotated evidence about when events occur.</p></div></article>
+          <article class="evidence-view spatial-view"><span class="view-symbol">S</span><div><h3>Answer–Spatial Teacher</h3><p>Adds object and bounding-box evidence about where.</p></div></article>
+        </div>
+        <figure class="paper-figure method-figure">
+          <button class="figure-button" type="button" data-figure="assets/method.webp" data-caption="MeSD framework: Multi-Evidence Self-Teacher and Verification-Guided Optimization." aria-label="Enlarge the MeSD method figure">
+            <img src="assets/method.webp" width="2200" height="1211" alt="MeSD framework showing answer, temporal, and spatial teachers, gated teacher-distribution fusion, and verification-guided credit refinement or reverse-KL correction." loading="lazy">
+            <span class="expand-label"><svg><use href="#i-expand"/></svg>Expand figure</span>
+          </button>
+        </figure>
+        <div class="method-details">
+          <article><span class="step-number">01</span><h3>Multi-Evidence Self-Teacher</h3><p>At the same student-generated prefix, the Answer Teacher acts as a semantic anchor. Gated fusion combines teacher-common preferences and teacher-specific residuals, retaining complementary support while reducing conflicting contributions.</p></article>
+          <article><span class="step-number">02</span><h3>Verification-Guided Optimization</h3><p>Successful and indeterminate trajectories retain reward-derived advantage signs while their magnitudes are refined. Only verified failures with the required evidence replace the policy loss with reverse-KL correction toward the fused teacher distribution.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section container" id="results" aria-labelledby="results-title">
+      <div class="section-heading"><div><p class="eyebrow">03 / Experimental results</p><h2 id="results-title">Stronger reasoning.<br>Across video benchmarks.</h2></div><p>Compare MeSD-7B with the paper’s 7B baselines, then explore MeSD on Qwen3-VL at 4B, 8B, and 32B. Each table identifies its metrics and comparison baseline.</p></div>
+      <h3 class="results-subtitle">MeSD-7B: main comparisons</h3>
+      <div class="results-toolbar">
+        <div class="tabs" role="tablist" aria-label="Experiment group">
+          <button id="tab-main" class="tab is-active" type="button" role="tab" aria-selected="true" aria-controls="result-panel" data-tab="main">Main results</button>
+          <button id="tab-additional" class="tab" type="button" role="tab" aria-selected="false" tabindex="-1" aria-controls="result-panel" data-tab="additional">Additional benchmarks</button>
+        </div>
+        <label class="baseline-control" id="baseline-control">Show Δ vs.
+          <select id="baseline"><option value="best">Best comparator</option><option value="base">Qwen2.5-VL-7B</option><option value="open">Open-o3-Video-7B</option></select>
+        </label>
+      </div>
+      <div id="result-panel" role="tabpanel" aria-labelledby="tab-main" tabindex="0">
+        <div class="table-scroll"><table id="results-table"><caption class="sr-only">MeSD experiment results; all metrics are higher-is-better.</caption><thead id="results-head"><tr><th scope="col">Benchmark / metric</th><th scope="col">Qwen2.5-VL</th><th scope="col">Open-o3-Video</th><th scope="col">VISD</th><th scope="col" class="ours">MeSD</th><th scope="col">Δ vs. best</th></tr></thead><tbody id="results-body"><tr><th scope="row">V-STaR<span class="metric">Answer Acc.</span></th><td>33.5</td><td>61.0</td><td>61.9</td><td class="ours">63.7</td><td class="gain">+1.8</td></tr>
+<tr><th scope="row">V-STaR<span class="metric">mLGM</span></th><td>22.4</td><td>46.6</td><td>48.9</td><td class="ours">50.2</td><td class="gain">+1.3</td></tr>
+<tr><th scope="row">WorldSense<span class="metric">Overall</span></th><td>35.5</td><td>38.9</td><td>39.9</td><td class="ours">41.6</td><td class="gain">+1.7</td></tr>
+<tr><th scope="row">VideoMMMU<span class="metric">Overall</span></th><td>51.2</td><td>52.6</td><td>53.8</td><td class="ours">56.1</td><td class="gain">+2.3</td></tr>
+<tr><th scope="row">LRR<span class="metric">Accuracy</span></th><td>59.3</td><td>69.1</td><td>73.5</td><td class="ours">73.6</td><td class="gain">+0.1</td></tr>
+<tr><th scope="row">TVGBench<span class="metric">mIoU</span></th><td>16.3</td><td>19.2</td><td>24.8</td><td class="ours">29.8</td><td class="gain">+5.0</td></tr>
+<tr class="average-row"><th scope="row">Four-benchmark average</th><td>40.6</td><td>45.0</td><td>48.0</td><td class="ours">50.3</td><td class="gain">+2.3</td></tr></tbody></table></div>
+        <p class="table-note" id="results-note">All models are 7B. Δ denotes score-point gains; mLGM is a logarithmic grounding score, not a percentage accuracy. The average covers WorldSense Overall, VideoMMMU Overall, LRR Accuracy, and TVGBench mIoU.</p>
+        <p class="comparison-status" id="comparison-status" role="status" aria-live="polite">Gains are relative to the best comparator on each displayed metric.</p>
+      </div>
+      <p class="results-scope">Comparisons cover the selected headline metrics in the paper’s main tables. Training starts from Open-o3-Video-SFT-7B; Qwen2.5-VL-7B serves as the general-model comparator.</p>
+      <noscript><p class="table-note">Enable JavaScript to switch experiment groups and comparison baselines. The main results are shown above.</p></noscript>
+      <article class="qwen-results" id="qwen3-results" aria-labelledby="qwen3-title">
+        <div class="qwen-heading"><div><h3 id="qwen3-title">MeSD on Qwen3-VL</h3><p>Base models and MeSD at 4B, 8B, and 32B, with gains over the base model at each size.</p></div><a class="text-link" href="assets/mesd-paper.pdf#page=24" target="_blank" rel="noopener">Paper · Tables 9–10 <span aria-hidden="true">↗</span></a></div>
+        <div class="table-scroll" tabindex="0" role="region" aria-label="Qwen3-VL results; scroll horizontally on smaller screens">
+          <table class="qwen-table" aria-describedby="qwen3-note">
+            <caption class="sr-only">Qwen3-VL base and MeSD results at each model size. Higher is better for every metric.</caption>
+            <thead><tr><th scope="col">Model</th><th scope="col">V-STaR<span class="metric">mLGM</span></th><th scope="col">WorldSense<span class="metric">Overall</span></th><th scope="col">VideoMMMU<span class="metric">Overall</span></th><th scope="col">LRR<span class="metric">Accuracy</span></th><th scope="col">TVGBench<span class="metric">mIoU</span></th><th scope="col" class="qwen-average">Avg.<span class="metric">Four benchmarks</span></th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Qwen3-VL-4B</th><td>18.0</td><td>39.7</td><td>55.2</td><td>69.3</td><td>13.7</td><td class="qwen-average">44.5</td></tr>
+            <tr class="qwen-ours"><th scope="row">Qwen3-VL-MeSD-4B</th><td>46.6</td><td>41.8</td><td>59.7</td><td>75.2</td><td>29.9</td><td class="qwen-average">51.7</td></tr>
+            <tr class="qwen-delta"><th scope="row">Δ vs. Qwen3-VL-4B</th><td>+28.6</td><td>+2.1</td><td>+4.5</td><td>+5.9</td><td>+16.2</td><td class="qwen-average">+7.2</td></tr>
+          </tbody>
+          <tbody>
+            <tr><th scope="row">Qwen3-VL-8B</th><td>21.9</td><td>41.4</td><td>61.3</td><td>70.2</td><td>17.1</td><td class="qwen-average">47.5</td></tr>
+            <tr class="qwen-ours"><th scope="row">Qwen3-VL-MeSD-8B</th><td>46.4</td><td>44.1</td><td>62.3</td><td>76.1</td><td>30.2</td><td class="qwen-average">53.2</td></tr>
+            <tr class="qwen-delta"><th scope="row">Δ vs. Qwen3-VL-8B</th><td>+24.5</td><td>+2.7</td><td>+1.0</td><td>+5.9</td><td>+13.1</td><td class="qwen-average">+5.7</td></tr>
+          </tbody>
+          <tbody>
+            <tr><th scope="row">Qwen3-VL-32B</th><td>38.6</td><td>44.6</td><td>65.2</td><td>74.4</td><td>31.2</td><td class="qwen-average">53.9</td></tr>
+            <tr class="qwen-ours"><th scope="row">Qwen3-VL-MeSD-32B</th><td>55.8</td><td>46.1</td><td>72.8</td><td>79.4</td><td>39.7</td><td class="qwen-average">59.5</td></tr>
+            <tr class="qwen-delta"><th scope="row">Δ vs. Qwen3-VL-32B</th><td>+17.2</td><td>+1.5</td><td>+7.6</td><td>+5.0</td><td>+8.5</td><td class="qwen-average">+5.7</td></tr>
+          </tbody>
+          </table>
+        </div>
+        <p class="table-note" id="qwen3-note">Avg. is the mean of WorldSense Overall, VideoMMMU Overall, LRR Accuracy, and TVGBench mIoU; V-STaR is excluded. Δ denotes score-point gains over the same-size Qwen3-VL base model. Higher is better.</p>
+        <p class="results-scope">Averages and gains follow the paper’s values computed before rounding, including the 32B average gain of +5.7. See Tables 9–10 for all grounding and category-level scores.</p>
+      </article>
+    </section>
+
+    <section class="section container release-section" id="resources" aria-labelledby="resources-title">
+      <div><p class="eyebrow">04 / Build on MeSD</p><h2 id="resources-title">Built for efficient training.</h2><p>vLLM rollouts and FSDP updates power distributed training. Evidence-conditioned teachers share parameters and reuse student trajectories, without additional teacher rollouts.</p></div>
+      <div class="release-detail"><p class="release-stack">PyTorch / FSDP <span>+</span> vLLM <span>+</span> Ray</p><a class="text-link" data-resource="code" hidden target="_blank" rel="noopener"><img class="brand-icon" src="assets/github.svg" width="20" height="20" alt="" aria-hidden="true">Training &amp; evaluation code <svg><use href="#i-arrow"/></svg></a><p class="release-pending" data-pending="code">Code release coming soon.</p></div>
+      <div class="training-efficiency" aria-label="Training efficiency compared with VISD no-feedback">
+        <p class="training-comparison">MeSD-7B · STGR-RL · 1 epoch / 2,327 steps · NVIDIA A800</p>
+        <dl class="training-metrics">
+          <div><dt>Training time</dt><dd class="metric-value">20.96<span>h</span></dd><dd class="metric-detail"><p>Down from 61.36h</p></dd></div>
+          <div><dt>Training speedup</dt><dd class="metric-value">2.93<span>×</span></dd><dd class="metric-detail"><p>+192.7% training steps per hour</p></dd></div>
+          <div><dt>Lower compute cost</dt><dd class="metric-value">65.8<span>%</span></dd><dd class="metric-detail"><p>335.38 A800 GPU-hours</p></dd></div>
+        </dl>
+        <p class="training-source">Compared with VISD no-feedback at the same 2,327-step budget. <a href="assets/mesd-paper.pdf#page=16" target="_blank" rel="noopener">Training setup</a> · <a href="assets/mesd-paper.pdf#page=25" target="_blank" rel="noopener">Efficiency results <span aria-hidden="true">↗</span></a></p>
+      </div>
+    </section>
+
+    <section class="citation-section" id="citation" aria-labelledby="citation-title">
+      <div class="container"><div class="citation-heading"><div><p class="eyebrow">Reference</p><h2 id="citation-title">Cite MeSD</h2></div><button class="button button-outline copy-button" id="copy-citation" type="button"><svg><use href="#i-copy"/></svg><span>Copy BibTeX</span></button></div><pre class="citation-code"><code id="bibtex">@misc{zhu2026mesd,
+  title = {MeSD: Multi-Evidence Self-Distillation for VideoLLM},
+  author = {Zhu, Weijie and Fang, Han and Zhang, Jiangling and Fu, Hanyu and Zhang, Yuzhe and Wei, Xin and Pan, Zhaoyan and Liu, Feiran and Jin, Xunjie and Sun, Hongbo and Lin, Zhiyu and Gao, Tianyi and Ding, Tianyi and Yuan, Ye and He, Zhongjiang and Sun, Hao and Wu, Zhiheng},
+  year = {2026},
+  note = {Manuscript}
+}</code></pre><p class="copy-status" id="copy-status" role="status" aria-live="polite"></p></div>
+    </section>
+  </main>
+
+  <footer class="container footer"><a class="wordmark" href="#top">MeSD<span class="wordmark-detail">Multi-Evidence Self-Distillation</span></a><p>Research project · 2026</p><a href="assets/mesd-paper.pdf" data-resource="paper" target="_blank" rel="noopener">Paper ↗</a></footer>
+
+  <dialog id="figure-dialog" aria-labelledby="figure-caption"><button class="dialog-close" type="button" aria-label="Close enlarged figure">×</button><img id="dialog-image" alt=""><p id="figure-caption"></p></dialog>
+</body>
+</html>
