@@ -12,6 +12,8 @@ dialog{border:1px solid #dfe5dd;border-radius:12px;padding:45px 24px 20px;max-wi
 tbody th{background:#fff;color:var(--ink);font-size:inherit;font-weight:500}tbody .metric{display:block;color:var(--muted);font-size:10px;font-weight:400;margin-top:2px}tbody tr:last-child th{border-bottom:0}.average-row th{border-top:2px solid #d5ddd3;background:#f7f8f5;font-weight:650}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important}}
 
+.arxiv-logo{width:50px;height:18px;object-fit:contain;flex-shrink:0}.arxiv-pending{cursor:default}.arxiv-pending:hover{transform:none;background:var(--ink)}.arxiv-pending .soon{color:#bcc7c2}.footer>span{font-size:11px;color:var(--muted)}
+
 .training-efficiency{grid-column:1/-1;padding:25px 28px;background:var(--wash);border:1px solid var(--line);border-radius:10px}
 .training-comparison{font-size:12px;font-weight:600;color:var(--muted);margin-bottom:22px}
 .training-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:0}
@@ -40,4 +42,3 @@ tbody th{background:#fff;color:var(--ink);font-size:inherit;font-weight:500}tbod
 .qwen-table .qwen-delta th,.qwen-table .qwen-delta td{background:#fafbf8;color:var(--accent);font-size:11px;border-bottom:0}
 .qwen-table tbody+tbody tr:first-child th,.qwen-table tbody+tbody tr:first-child td{border-top:2px solid #d5ddd3}
 @media(max-width:600px){#overview{padding-top:35px}.qwen-results{margin-top:32px;padding-top:28px}.qwen-heading{display:block}.qwen-heading h3{font-size:21px}.qwen-heading p{font-size:13px}.qwen-heading .text-link{margin-top:12px;font-size:12px}.qwen-table th,.qwen-table td{padding:12px}.qwen-table tbody th{font-size:11px}.results-subtitle{font-size:19px;margin-top:26px}}
-

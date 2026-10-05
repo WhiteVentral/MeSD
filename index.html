@@ -38,14 +38,15 @@
       <h1 id="project-title"><span class="project-name">MeSD</span><span class="project-title">Multi-Evidence Self-Distillation<br class="desktop-break"> for VideoLLM</span></h1>
       <p class="hero-claim">To our knowledge, the <strong>first multi-teacher on-policy self-distillation framework for VideoLLMs.</strong></p>
       <div class="resource-links">
-        <a class="button button-dark" href="assets/mesd-paper.pdf" data-resource="paper" target="_blank" rel="noopener"><svg><use href="#i-paper"/></svg>Read the paper<svg class="button-arrow"><use href="#i-arrow"/></svg></a>
+        <a class="button button-dark" data-resource="paper" hidden target="_blank" rel="noopener" aria-label="Read the paper on arXiv"><img class="arxiv-logo" src="assets/arxiv.svg" width="50" height="18" alt="" aria-hidden="true"><svg class="button-arrow"><use href="#i-arrow"/></svg></a>
+        <span class="button button-dark arxiv-pending" data-pending="paper" aria-label="arXiv paper coming soon"><img class="arxiv-logo" src="assets/arxiv.svg" width="50" height="18" alt="" aria-hidden="true"><span class="soon">Coming soon</span></span>
         <a class="button button-outline" data-resource="code" hidden target="_blank" rel="noopener" aria-label="GitHub source code"><img class="brand-icon" src="assets/github.svg" width="20" height="20" alt="" aria-hidden="true">Code</a>
         <span class="button button-pending" data-pending="code" aria-label="GitHub source code coming soon"><img class="brand-icon" src="assets/github.svg" width="20" height="20" alt="" aria-hidden="true">Code <span class="soon">Coming soon</span></span>
         <a class="button button-outline" data-resource="model" hidden target="_blank" rel="noopener" aria-label="Hugging Face model weights"><img class="brand-icon" src="assets/huggingface.svg" width="20" height="20" alt="" aria-hidden="true">Models</a>
         <span class="button button-pending" data-pending="model" aria-label="Hugging Face model weights coming soon, pending release approval"><img class="brand-icon" src="assets/huggingface.svg" width="20" height="20" alt="" aria-hidden="true">Models <span class="soon">Coming soon</span></span>
         <a class="button button-outline" href="#results">Explore results<svg><use href="#i-arrow"/></svg></a>
       </div>
-      <p class="model-release-note" data-pending="model">Model weights are undergoing internal release approval and will be made available upon approval.</p>
+      <p class="model-release-note" data-pending="model">Model weights are not yet available for download because they are undergoing internal release approval. We will add the public model link here as soon as the approval process is complete.</p>
       <div class="hero-summary">
         <p class="summary-label">THE IDEA, IN ONE SENTENCE</p>
         <p>Learn from <span class="answer-text">what</span>, <span class="temporal-text">when</span>, and <span class="spatial-text">where</span> — then use verification to decide <em>how</em> to learn.</p>
@@ -165,7 +166,7 @@
     </section>
   </main>
 
-  <footer class="container footer"><a class="wordmark" href="#top">MeSD<span class="wordmark-detail">Multi-Evidence Self-Distillation</span></a><p>Research project · 2026</p><a href="assets/mesd-paper.pdf" data-resource="paper" target="_blank" rel="noopener">Paper ↗</a></footer>
+  <footer class="container footer"><a class="wordmark" href="#top">MeSD<span class="wordmark-detail">Multi-Evidence Self-Distillation</span></a><p>Research project · 2026</p><a data-resource="paper" hidden target="_blank" rel="noopener">arXiv ↗</a><span data-pending="paper">arXiv · Coming soon</span></footer>
 
   <dialog id="figure-dialog" aria-labelledby="figure-caption"><button class="dialog-close" type="button" aria-label="Close enlarged figure">×</button><img id="dialog-image" alt=""><p id="figure-caption"></p></dialog>
 </body>
