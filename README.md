@@ -6,6 +6,8 @@ Live site: https://whiteventral.github.io/MeSD/
 
 Code repository: https://github.com/WhiteVentral/MeSD-code
 
+Paper: [arXiv:2610.06342](https://arxiv.org/abs/2610.06342)
+
 ## Local preview
 
 Run the following command in this directory:
@@ -23,11 +25,11 @@ Then open <http://127.0.0.1:8000> in a browser.
 - `site.js` contains the paper's experimental data, baseline switching, resource-link handling, and other interactions. A static copy of the main results table also appears in `index.html`; update both representations when changing the data.
 - `assets/` contains the paper PDF, method and overview figures, and platform marks. The GitHub mark comes from [Primer Octicons](https://github.com/primer/octicons/blob/main/icons/mark-github-16.svg) under its included [MIT license](assets/github-LICENSE.txt). The Hugging Face mark comes from the [official brand resources](https://huggingface.co/brand).
 
-The arXiv submission is still being processed. Keep `paperUrl` and `arxivId` empty until the official `arxiv.org/abs/...` page is available. The site displays **arXiv · Coming soon** in the meantime. After publication, set `paperUrl` to the arXiv abstract URL and `arxivId` to the identifier; the button, footer link, and BibTeX entry will update automatically.
+The paper is available at [arXiv:2610.06342](https://arxiv.org/abs/2610.06342). `paperUrl` and `arxivId` are configured for this release; the paper button, footer link, and BibTeX entry point to the published preprint.
 
 The trained MeSD model weights are undergoing internal release approval and are not yet available for download. Keep `modelUrl` empty while approval is pending. The site displays **Models · Coming soon** and explains the approval status. After approval and upload, set `modelUrl` to the public download URL; both pending messages will automatically be replaced by active links.
 
-The source code is linked through `codeUrl` and currently points to the private `WhiteVentral/MeSD-code` repository.
+The source code is linked through `codeUrl` and currently points to the `WhiteVentral/MeSD-code` repository.
 
 ## Training-efficiency data
 
